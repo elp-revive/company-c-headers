@@ -5,6 +5,7 @@
 ;; Author: Alastair Rankine <alastair@girtby.net>
 ;; Keywords: development company
 ;; Package-Requires: ((emacs "24.1") (company "0.8"))
+;; Version: 0.1.0
 
 ;; This file is not part of GNU Emacs.
 
