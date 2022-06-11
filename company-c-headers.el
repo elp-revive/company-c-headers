@@ -127,8 +127,9 @@ Filters on the appropriate regex for the current major mode."
     (setq candidates (sort candidates #'string<))
 
     ;; Add the delimiter and metadata
-    (mapcar (lambda (C) (propertize (concat delim C) 'directory dir)) candidates)
-    ))
+    (if (or (string= delim "\"") (string= delim "<"))
+        (mapcar (lambda (C) (propertize (concat delim C) 'directory dir)) candidates)
+      candidates)))
 
 (defun company-c-headers--candidates (prefix)
   "Return candidates for PREFIX."
