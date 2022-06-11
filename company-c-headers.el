@@ -1,8 +1,10 @@
 ;;; company-c-headers.el --- Company mode backend for C/C++ header files  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2014 Alastair Rankine
+;; Copyright (C) 2022 Jen-Chieh Shen
 
 ;; Author: Alastair Rankine <alastair@girtby.net>
+;; Maintainer: Jen-Chieh Shen <jcs090218@gmail.com>
 ;; Keywords: development company
 ;; URL: http://github.com/elp-revive/company-c-headers
 ;; Package-Requires: ((emacs "26.1") (company "0.8"))
