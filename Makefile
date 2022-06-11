@@ -1,30 +1,33 @@
-CASK ?= cask
 EMACS ?= emacs
+EASK ?= eask
 
-PKGDIR := $(shell EMACS=$(EMACS) $(CASK) package-directory)
+.PHONY: clean checkdoc lint package install compile test
 
-SRCS = company-c-headers.el
-OBJECTS = $(SRCS:.el=.elc)
+ci: clean package install compile
 
-all: test
-
-test: unit
-
-compile : $(OBJECTS)
-
-unit: compile
-	${CASK} exec ert-runner
+package:
+	@echo "Packaging..."
+	$(EASK) package
 
 install:
-	${CASK} install
+	@echo "Installing..."
+	$(EASK) install
 
-deps : $(PKGDIR)
+compile:
+	@echo "Compiling..."
+	$(EASK) compile
 
-$(PKGDIR) : Cask
-	$(CASK) install
-	touch $(PKGDIR)
+test:
+	@echo "Testing..."
+	$(EASK) test ert ./test/*.el
 
-.PHONY:	all test unit install deps
+checkdoc:
+	@echo "Run checkdoc..."
+	$(EASK) lint checkdoc
 
-%.elc : %.el $(PKGDIR)
-	$(CASK) exec $(EMACS) -Q --batch $(EMACSFLAGS) -f batch-byte-compile $<
+lint:
+	@echo "Run package-lint..."
+	$(EASK) lint package
+
+clean:
+	$(EASK) clean-all
