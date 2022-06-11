@@ -8,7 +8,7 @@
 
 This library enables the completion of C/C++ header file names using [company-mode](https://company-mode.github.io) for Emacs.
 
-![](screenshot.png)
+![](etc/screenshot.png)
 
 When you type an `#include` declaration within a supported major mode (currently
 `c-mode`, `c++-mode` and `objc-mode`), company-c-headers will search for completion
