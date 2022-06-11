@@ -1,4 +1,7 @@
-/.cask/
+/recipes
+
+/.eask/
+/dist/
 
 # Compiled
 *.elc
