@@ -4,7 +4,8 @@
 
 ;; Author: Alastair Rankine <alastair@girtby.net>
 ;; Keywords: development company
-;; Package-Requires: ((emacs "24.1") (company "0.8"))
+;; URL: http://github.com/elp-revive/company-c-headers
+;; Package-Requires: ((emacs "26.1") (company "0.8"))
 ;; Version: 0.1.0
 
 ;; This file is not part of GNU Emacs.
