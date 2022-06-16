@@ -2,6 +2,9 @@
          "0.1.0"
          "Company mode backend for C/C++ header files")
 
+(website-url "http://github.com/elp-revive/company-c-headers")
+(keywords "development" "company")
+
 (package-file "company-c-headers.el")
 
 (source "gnu")
