@@ -53,22 +53,19 @@
 
 (defcustom company-c-headers-path-system
   '("/usr/include/" "/usr/local/include/")
-  "List of paths to search for system (i.e. angle-bracket
-delimited) header files.  Alternatively, a function can be
-supplied which returns the path list."
+  "List of paths to search for system (i.e. angle-bracket delimited) header
+files.  Alternatively, a function can be supplied which returns the path list."
   :type '(choice (repeat directory)
-                 function)
-  )
+                 function))
 
 (defcustom company-c-headers-path-user
   '(".")
-  "List of paths to search for user (i.e. double-quote delimited)
-header files.  Alternatively, a function can be supplied which
-returns the path list.  Note that paths in
+  "List of paths to search for user (i.e. double-quote delimited) header files.
+Alternatively, a function can be supplied which returns the path list.  Note
+that paths in
 `company-c-headers-path-system' are implicitly appended."
   :type '(choice (repeat directory)
-                 function)
-  )
+                 function))
 
 (defvar company-c-headers-include-declaration
   (rx
@@ -77,26 +74,21 @@ returns the path list.  Note that paths in
    (one-or-more blank)
    (submatch
     (in "<\"")
-    (zero-or-more (not (in ">\""))))
-   )
+    (zero-or-more (not (in ">\"")))))
   "Prefix matching C/C++/ObjC include directives.")
 
 (defvar company-c-headers-modes
-  `(
-    (c-mode     . ,(rx ".h" line-end))
+  `((c-mode     . ,(rx ".h" line-end))
     (c++-mode   . ,(rx (or (: line-start (one-or-more (in "A-Za-z0-9_")))
                            (or ".h" ".hpp" ".hxx" ".hh"))
                        line-end))
-    (objc-mode  . ,(rx ".h" line-end))
-    )
+    (objc-mode  . ,(rx ".h" line-end)))
   "Assoc list of supported major modes and associated header file names.")
 
 (defun call-if-function (path)
   "If PATH is bound to a function, return the result of calling it.
 Otherwise just return the value."
-  (if (functionp path)
-      (funcall path)
-    path))
+  (if (functionp path) (funcall path) path))
 
 (defun company-c-headers--candidates-for (prefix dir)
   "Return a list of candidates for PREFIX in directory DIR.
@@ -112,8 +104,7 @@ Filters on the appropriate regex for the current major mode."
     (when (and subdir (file-directory-p subdir))
       (setq dir subdir)
       (setq fileprefix (file-name-nondirectory fileprefix))
-      (setq delim (concat delim prefixdir))
-      )
+      (setq delim (concat delim prefixdir)))
 
     ;; Using a list of completions for this directory, remove those that a) don't match the
     ;; headers regexp, and b) are not directories (except for "." and ".." which ARE removed)
@@ -146,10 +137,8 @@ Filters on the appropriate regex for the current major mode."
       (setq p (or (cdr p)
                   (let ((tmp next))
                     (setq next nil)
-                    tmp)))
-      )
-    (cl-remove-duplicates candidates :test 'equal)
-    ))
+                    tmp))))
+    (cl-remove-duplicates candidates :test 'equal)))
 
 (defun company-c-headers--meta (candidate)
   "Return the metadata associated with CANDIDATE.  Currently just the directory."
@@ -189,9 +178,7 @@ Filters on the appropriate regex for the current major mode."
            ;; move cursor to end of line.
            (pcase (aref matched 0)
              (?\" (if (looking-at "\"") (end-of-line) (insert "\"")))
-             (?<  (if (looking-at ">") (end-of-line) (insert ">"))))))))
-    ))
+             (?<  (if (looking-at ">") (end-of-line) (insert ">"))))))))))
 
 (provide 'company-c-headers)
-
 ;;; company-c-headers.el ends here
