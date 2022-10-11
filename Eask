@@ -3,17 +3,19 @@
          "Company mode backend for C/C++ header files")
 
 (website-url "http://github.com/elp-revive/company-c-headers")
-(keywords "development" "company")
+(keywords "convenience" "development" "company")
 
 (package-file "company-c-headers.el")
 
 (source "gnu")
+(source "jcs-elpa")
+(source "melpa")
 
 (depends-on "emacs" "26.1")
 (depends-on "company")
+(depends-on "f")
 
 (development
- (depends-on "f")
  (depends-on "ert-runner")
  (depends-on "undercover"))
 
