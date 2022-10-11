@@ -191,12 +191,12 @@ Filters on the appropriate regex for the current major mode."
 
 (defun company-c-headers--guess-path (paths fn)
   "Complete a source root path with PATHS by guessing FN."
-  (let ((root (nth 0 paths)) (index 1))
+  (let ((root (nth 0 paths)) (index 0))
     (while (and root (< index (length paths)))
+      (cl-incf index)
       (let ((matched (ignore-errors (f-directories root fn))))
         (setq root (when matched (concat (nth 0 matched)
-                                         (nth index paths)))))
-      (cl-incf index))
+                                         (nth index paths))))))
     (when root (append (list root) (f-directories root nil t)))))
 
 ;;;###autoload
@@ -210,7 +210,14 @@ Filters on the appropriate regex for the current major mode."
       #'company-c-headers--version-check)
      (company-c-headers--guess-path
       '("C:/Program Files/Microsoft Visual Studio/" "/Community/VC/Tools/MSVC/" "/include/")
-      #'company-c-headers--version-check)))
+      #'company-c-headers--version-check)
+     (company-c-headers--guess-path
+      '("C:/Program Files (x86)/Windows Kits/10/Include/")
+      #'company-c-headers--version-check)
+     (company-c-headers--guess-path
+      '("C:/Program Files/Windows Kits/10/Include/")
+      #'company-c-headers--version-check)
+     ))
    ((eq system-type 'darwin)
     '("/usr/lib/" "/usr/local/lib/"
       "/usr/include/c++" "/usr/local/include/c++"))
