@@ -216,8 +216,7 @@ Filters on the appropriate regex for the current major mode."
       #'company-c-headers--version-check)
      (company-c-headers--guess-path
       '("C:/Program Files/Windows Kits/10/Include/")
-      #'company-c-headers--version-check)
-     ))
+      #'company-c-headers--version-check)))
    ((eq system-type 'darwin)
     '("/usr/lib/" "/usr/local/lib/"
       "/usr/include/c++" "/usr/local/include/c++"))
