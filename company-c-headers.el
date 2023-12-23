@@ -158,7 +158,7 @@ Filters on the appropriate regex for the current major mode."
         1))
 
 ;;;###autoload
-(defun company-c-headers (command &optional arg &rest ignored)
+(defun company-c-headers (command &optional arg &rest _ignored)
   "Company backend for C/C++ header files."
   (interactive (list 'interactive))
   (pcase command
