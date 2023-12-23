@@ -85,6 +85,9 @@ that paths in `company-c-headers-path-system' are implicitly appended."
     (objc-mode  . ,(rx ".h" line-end)))
   "Assoc list of supported major modes and associated header file names.")
 
+(defvar company-c-headers--cache nil
+  "Cache for candidates.")
+
 (defun company-c-headers--call-if-function (path)
   "If PATH is bound to a function, return the result of calling it.
 Otherwise just return the value."
@@ -132,13 +135,17 @@ Filters on the appropriate regex for the current major mode."
         candidates)
     (while p
       (when (file-directory-p (car p))
-        (setq candidates (append candidates (company-c-headers--candidates-for prefix (car p)))))
-
+        (setq candidates (append candidates
+                                 (company-c-headers--candidates-for prefix (car p)))))
       (setq p (or (cdr p)
                   (let ((tmp next))
                     (setq next nil)
                     tmp))))
-    (cl-remove-duplicates candidates :test 'equal)))
+
+    ;; Set cache
+    (setq company-c-headers--cache (cl-remove-duplicates candidates :test 'equal))
+
+    company-c-headers--cache))
 
 (defun company-c-headers--meta (candidate)
   "Return the metadata associated with CANDIDATE.  Currently just the directory."
@@ -161,7 +168,8 @@ Filters on the appropriate regex for the current major mode."
                 (looking-back company-c-headers-include-declaration (line-beginning-position)))
        (match-string-no-properties 1)))
     (`sorted t)
-    (`candidates (company-c-headers--candidates arg))
+    (`candidates (or company-c-headers--cache
+                     (company-c-headers--candidates arg)))
     (`meta (company-c-headers--meta arg))
     (`location (company-c-headers--location arg))
     (`post-completion
@@ -222,6 +230,11 @@ Filters on the appropriate regex for the current major mode."
       "/usr/include/c++" "/usr/local/include/c++"))
    ((eq system-type 'gnu/linux)
     '("/usr/include/" "/usr/local/include/"))))
+
+(defun company-c-headers-clear-cache ()
+  "Clear cache."
+  (interactive)
+  (setq company-c-headers--cache nil))
 
 (provide 'company-c-headers)
 ;;; company-c-headers.el ends here
