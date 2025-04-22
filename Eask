@@ -1,3 +1,5 @@
+;; -*- mode: eask; lexical-binding: t -*-
+
 (package "company-c-headers"
          "0.1.0"
          "Company mode backend for C/C++ header files")
